@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="ConSole" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="GraphicMap" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="ConSole" max="32767" attributes="0"/>
+                  <Component id="GraphicMap" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="ConSole">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                                  <Component id="ConToRobot" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="Close" min="-2" pref="102" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="ModeSelect" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="RotateLeft" min="-2" pref="52" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="Go" min="-2" pref="52" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="Back" min="-2" pref="52" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="RotateRight" min="-2" pref="52" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+              <Component id="jScrollPane1" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <Component id="jScrollPane1" min="-2" pref="211" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="Go" min="-2" pref="44" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="Back" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="RotateLeft" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="RotateRight" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="ModeSelect" min="-2" pref="52" max="-2" attributes="0"/>
+                  <EmptySpace pref="50" max="32767" attributes="0"/>
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="Close" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="ConToRobot" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="18" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="STATUS"/>
+          </Properties>
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="jTextArea1">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="rows" type="int" value="5"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JButton" name="Close">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Close"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CloseActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="Back">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="14" style="1"/>
+            </Property>
+            <Property name="label" type="java.lang.String" value="S"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BackActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="Go">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="W"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GoActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="Action actionListenerKey = new AbstractAction() {&#xa;      public void actionPerformed(ActionEvent actionEvent) {&#xa;        JButton source = (JButton) actionEvent.getSource();&#xa;        //System.out.println(&quot;Activated: &quot; + source.getText());&#xa;        String tx=source.getText();&#xa;        if(tx == &quot;W&quot;){&#xa;            Go.doClick();&#xa;        }&#xa;        else if(tx == &quot;S&quot;){&#xa;            Back.doClick();&#xa;        }&#xa;        else if(tx == &quot;A&quot;){&#xa;            RotateLeft.doClick();&#xa;        }&#xa;        else if(tx == &quot;D&quot;){&#xa;            RotateRight.doClick();&#xa;        }&#xa;      }&#xa;    };&#xa;&#xa;KeyStroke W_Go = KeyStroke.getKeyStroke(&quot;W&quot;);&#xa;InputMap inputMap = Go.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);&#xa;inputMap.put(W_Go, &quot;The Action&quot;);&#xa;ActionMap actionMap = Go.getActionMap();&#xa;actionMap.put(&quot;The Action&quot;, actionListenerKey);&#xa;&#xa;KeyStroke S_Back = KeyStroke.getKeyStroke(&quot;S&quot;);&#xa;inputMap = Back.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);&#xa;inputMap.put(S_Back, &quot;The Action&quot;);&#xa;actionMap = Back.getActionMap();&#xa;actionMap.put(&quot;The Action&quot;, actionListenerKey);&#xa;&#xa;KeyStroke A_RotateLeft = KeyStroke.getKeyStroke(&quot;A&quot;);&#xa;inputMap = RotateLeft.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);&#xa;inputMap.put(A_RotateLeft, &quot;The Action&quot;);&#xa;actionMap = RotateLeft.getActionMap();&#xa;actionMap.put(&quot;The Action&quot;, actionListenerKey);&#xa;&#xa;KeyStroke D_RotateRight = KeyStroke.getKeyStroke(&quot;D&quot;);&#xa;inputMap = RotateRight.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);&#xa;inputMap.put(D_RotateRight, &quot;The Action&quot;);&#xa;actionMap = RotateRight.getActionMap();&#xa;actionMap.put(&quot;The Action&quot;, actionListenerKey);"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="RotateLeft">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="14" style="1"/>
+            </Property>
+            <Property name="label" type="java.lang.String" value="A"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RotateLeftActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="RotateRight">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="14" style="1"/>
+            </Property>
+            <Property name="label" type="java.lang.String" value="D"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RotateRightActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="ConToRobot">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Wake Robot!"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ConToRobotActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="ModeSelect">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="18" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="MANUAL MODE"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ModeSelectActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="Action actionListenerKey2 = new AbstractAction() {&#xa;      public void actionPerformed(ActionEvent actionEvent) {&#xa;        JToggleButton source = (JToggleButton) actionEvent.getSource();&#xa;        //System.out.println(&quot;Activated: &quot; + source.getText());&#xa;        String tx=source.getText();&#xa;        if(tx == &quot;MANUAL MODE&quot; || tx == &quot;AUTO MODE&quot;){&#xa;            ModeSelect.doClick();&#xa;        }&#xa;      }&#xa;    };&#xa;&#xa;KeyStroke E_ModeSelect = KeyStroke.getKeyStroke(&quot;E&quot;);&#xa;InputMap inputMap2 = ModeSelect.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);&#xa;inputMap2.put(E_ModeSelect, &quot;The Action&quot;);&#xa;ActionMap actionMap2 = ModeSelect.getActionMap();&#xa;actionMap2.put(&quot;The Action&quot;, actionListenerKey2);"/>
+          </AuxValues>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="GraphicMap">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="0" type="rgb"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new J2d1()"/>
+      </AuxValues>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="708" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
+  </SubComponents>
+</Form>
