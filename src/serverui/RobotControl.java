@@ -9,14 +9,14 @@ import java.net.Socket;
 
 
 class RecieveFromClientThread implements Runnable {
-    RobotControl t = new RobotControl();
+    RobotControl tt = new RobotControl();
     public void run() {
         try {
-            t.RecieveFromClient();
+            tt.RecieveFromClient();
         } catch (IOException ex) {
-            t.DebugLog(ex.getMessage());
+            tt.DebugLog(ex.getMessage());
         } catch (InterruptedException ex) {
-            t.DebugLog(ex.getMessage());
+            tt.DebugLog(ex.getMessage());
         }
     }
 
