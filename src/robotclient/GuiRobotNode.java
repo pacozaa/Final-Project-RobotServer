@@ -41,6 +41,7 @@ public class GuiRobotNode extends javax.swing.JFrame {
         ipText.setText("IP");
 
         ConnectBtn.setText("Connect");
+        ConnectBtn.setEnabled(false);
         ConnectBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ConnectBtnActionPerformed(evt);
@@ -147,10 +148,10 @@ public class GuiRobotNode extends javax.swing.JFrame {
     } // end method displayMessage
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ConnectBtn;
+    public javax.swing.JButton ConnectBtn;
     private javax.swing.JTextArea DebugLog;
     private javax.swing.JButton StartSerialBtn;
-    private javax.swing.JTextField ipText;
+    public javax.swing.JTextField ipText;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
