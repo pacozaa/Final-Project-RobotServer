@@ -8,21 +8,21 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 
-class RecieveFromClientThread implements Runnable {
-    RobotControl tt = new RobotControl();
+class RecieveFromClient implements Runnable {
+    RobotControl t = new RobotControl();
     public void run() {
         try {
-            tt.RecieveFromClient();
+            t.RecieveFromClient();
         } catch (IOException ex) {
-            tt.DebugLog(ex.getMessage());
+            t.DebugLog(ex.getMessage());
         } catch (InterruptedException ex) {
-            tt.DebugLog(ex.getMessage());
+            t.DebugLog(ex.getMessage());
         }
     }
 
 }
 
-class StreamDirectionThread implements Runnable {
+class StreamDirection implements Runnable {
     RobotControl t = new RobotControl();
     public void run() {
         try {
@@ -35,7 +35,7 @@ class StreamDirectionThread implements Runnable {
     }
 }
 
-class ListeningThread implements Runnable{
+class Listening implements Runnable{
     RobotControl t = new RobotControl();
     public void run(){
         try {
@@ -60,16 +60,17 @@ public class RobotControl {
     public static String ConnectionStatus = null;
     public static String DirectionStream = null;
     public static String ClientIn;
-    
+    public static int LWheelServer = 0;
+    public static int RWheelServer = 0;
     
     
     public static void main(String[] args) throws IOException {
 
         winframe = new GuiControlNode();
         serverSocket = new ServerSocket(10007);
-        Thread ListenThread = new Thread(new ListeningThread());
-        Thread RecieveThread = new Thread(new RecieveFromClientThread());
-        Thread DirectionStreamThread = new Thread(new StreamDirectionThread());
+        Thread ListenThread = new Thread(new Listening());
+        Thread RecieveThread = new Thread(new RecieveFromClient());
+        Thread DirectionStreamThread = new Thread(new StreamDirection());
         ListenThread.start();
         RecieveThread.start();
         DirectionStreamThread.start();
