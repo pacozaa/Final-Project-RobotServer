@@ -11,7 +11,8 @@ import javax.swing.SwingUtilities;
 public class GuiRobotNode extends javax.swing.JFrame {
 
     public static boolean CheckConnectBtn = false;
-    public static String serverHost = new String("");
+    public static String serverHost;
+    public static boolean CheckStartSerialBtn = false;
     public GuiRobotNode() {
         initComponents();
     }
@@ -29,7 +30,7 @@ public class GuiRobotNode extends javax.swing.JFrame {
         DebugLog = new javax.swing.JTextArea();
         ipText = new javax.swing.JTextField();
         ConnectBtn = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        StartSerialBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,7 +47,12 @@ public class GuiRobotNode extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Start Serial ");
+        StartSerialBtn.setText("Start Serial ");
+        StartSerialBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StartSerialBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -61,7 +67,7 @@ public class GuiRobotNode extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(ConnectBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(StartSerialBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -74,7 +80,7 @@ public class GuiRobotNode extends javax.swing.JFrame {
                     .addComponent(ipText, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ConnectBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addComponent(StartSerialBtn)
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -85,6 +91,10 @@ public class GuiRobotNode extends javax.swing.JFrame {
         GuiRobotNode.serverHost = this.ipText.getText();
         GuiRobotNode.CheckConnectBtn = true;
     }//GEN-LAST:event_ConnectBtnActionPerformed
+
+    private void StartSerialBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartSerialBtnActionPerformed
+        GuiRobotNode.CheckStartSerialBtn = true;
+    }//GEN-LAST:event_StartSerialBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,8 +149,8 @@ public class GuiRobotNode extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ConnectBtn;
     private javax.swing.JTextArea DebugLog;
+    private javax.swing.JButton StartSerialBtn;
     private javax.swing.JTextField ipText;
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
