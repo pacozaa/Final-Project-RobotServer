@@ -18,6 +18,8 @@ class ConnectToHost implements Runnable{
             t.ConnectToHost();
         } catch (IOException ex) {
             
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ConnectToHost.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
@@ -92,6 +94,8 @@ public class RobotClient {
     public static String ConnectStatus;
     public static String TCPInputLine;
     public static String DataToHost;
+    public static byte counterMain=0;
+    public static byte serialFire=0;
     
     public static void main(String[] args) throws IOException, UnsupportedCommOperationException{
     serialPort = new SerialPortRW();
@@ -120,8 +124,10 @@ public class RobotClient {
         winframe.displayMessage(message);
     }
 
-    public void ConnectToHost() throws IOException {
-        while(winframe.ipText.getText().length()< 10){}
+    public void ConnectToHost() throws IOException, InterruptedException {
+        while(winframe.ipText.getText().length()< 10){
+            Thread.sleep(1);
+        }
         while(GuiRobotNode.CheckConnectBtn == false){
             winframe.ConnectBtn.setEnabled(true);
         }
@@ -134,10 +140,16 @@ public class RobotClient {
     }
 
     public void RecieveStream() throws InterruptedException, IOException {
-        while(!"OK".equals(RobotClient.ConnectStatus)){}
+        this.DebugLog("Ready to Recieve");
+        while(!"OK".equals(RobotClient.ConnectStatus)){
+        
+            Thread.sleep(1);
+        }
+        this.DebugLog("Ready to TCP Chat");
         while(true){
             while((TCPInputLine = intcp.readLine()) != null) {
-
+                this.DebugLog("Recieve Stream TCP : "+TCPInputLine);
+                this.serialFire=1;
                 Thread.sleep(1);
             }
             Thread.sleep(1);
@@ -145,10 +157,13 @@ public class RobotClient {
     }
 
     public void SendStream() throws InterruptedException {
-       while(!"OK".equals(RobotClient.ConnectStatus)){}
+       while(!"OK".equals(RobotClient.ConnectStatus)){
+           Thread.sleep(1);
+       }
        while(true){
            while(DataToHost != null){
                outtcp.println(DataToHost);
+               this.DebugLog("SendStream : "+DataToHost);
                DataToHost = null;//---Mark
            }
            Thread.sleep(1);
@@ -156,13 +171,20 @@ public class RobotClient {
     }
 
     public void SerialRead() throws InterruptedException {
+        this.DebugLog("SerialRead is Start");
         while(GuiRobotNode.CheckStartSerialBtn == false || !"OK".equals(SerialPortRW.SerialStatus)){
-            
+            Thread.sleep(1);
         }
+        this.DebugLog("SerialRead is Start");
         while(true){
-            while(SerialPortRW.readSerial != null){
+            while(SerialPortRW.readSerial != null && SerialPortRW.counter>this.counterMain && SerialPortRW.readSerial != "/n" && SerialPortRW.readSerial != "\r"){
                 RobotClient.SerialInputLine = SerialPortRW.readSerial;
-                SerialPortRW.readSerial = null;//---Mark
+                this.DebugLog("SerialRead : "+RobotClient.SerialInputLine + " Main : "+this.counterMain+" Event : "+SerialPortRW.counter);
+                this.counterMain= SerialPortRW.counter;
+                if(SerialPortRW.counter > 10){
+                    SerialPortRW.counter=0;
+                    this.counterMain=0;
+                }
                 Thread.sleep(1);
             }
             Thread.sleep(1);
@@ -170,11 +192,16 @@ public class RobotClient {
     }
 
     public void SerialSend() throws InterruptedException {
+        this.DebugLog("Serial Send is Start");
         while(GuiRobotNode.CheckStartSerialBtn == false || !"OK".equals(SerialPortRW.SerialStatus)){ 
+            Thread.sleep(1);
         }
+        this.DebugLog("Serial Send is Ready");
         while(true){
-            while(TCPInputLine != null){
-                serialPort.serialSend(TCPInputLine);
+            while(this.TCPInputLine != null && this.serialFire==1){
+                serialPort.serialSend(this.TCPInputLine);
+                this.DebugLog("SerialSend : "+this.TCPInputLine+ " Fire : "+this.serialFire);
+                this.serialFire=0;
                 Thread.sleep(1);
             }
             Thread.sleep(1);
