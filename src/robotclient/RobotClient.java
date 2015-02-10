@@ -164,6 +164,7 @@ public class RobotClient {
        while(true){
            while(DataToHost != null){
                outtcp.println(DataToHost);
+               outtcp.flush();
                this.DebugLog("SendStream : "+DataToHost);
                DataToHost = null;//---Mark
            }
@@ -178,15 +179,17 @@ public class RobotClient {
         }
         this.DebugLog("SerialRead is Start");
         while(true){
-            while(SerialPortRW.readSerial != null && SerialPortRW.counter>this.counterMain && SerialPortRW.readSerial != "\n" && SerialPortRW.readSerial != "\r"){
+            while(SerialPortRW.readSerial != null && SerialPortRW.counter>this.counterMain && CheckConvertInteger(SerialPortRW.readSerial) == true){
                 RobotClient.SerialInputLine = SerialPortRW.readSerial;
                 this.DebugLog("SerialRead : "+RobotClient.SerialInputLine + " Main : "+this.counterMain+" Event : "+SerialPortRW.counter);
                 this.DebugLog("SerialRead HEX : "+toHex(RobotClient.SerialInputLine));
+                this.DebugLog("SerialRead HEX Ori : "+toHex(SerialPortRW.readSerial));
                 this.counterMain= SerialPortRW.counter;
                 if(SerialPortRW.counter > 10){
                     SerialPortRW.counter=0;
                     this.counterMain=0;
                 }
+                
                 Thread.sleep(1);
             }
             Thread.sleep(1);
@@ -218,8 +221,18 @@ public class RobotClient {
     }
     
     public String toHex(String arg) {
-        return String.format("%040x", new BigInteger(1, arg.getBytes(/*YOUR_CHARSET?*/)));
+        return String.format("%x", new BigInteger(1, arg.getBytes(/*YOUR_CHARSET?*/)));
     }
-    
+    public boolean CheckConvertInteger(String s) {
+        try { 
+            if(Integer.parseInt(toHex(s)) == 0){
+                return false;
+            } 
+        } catch(NumberFormatException e) { 
+            return true;
+        }
+        // only got here if we didn't return false
+    return true;
+}
     
 }
