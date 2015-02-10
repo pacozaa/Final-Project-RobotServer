@@ -21,12 +21,18 @@ import java.util.TooManyListenersException;
 
 
 public class SerialPortRW implements SerialPortEventListener {
+    public static byte counter=0;
     SerialPort serialPort;
     private static final String PORT_NAMES[]={
         "/dev/ttyACM0",//for Ubuntu
         "/dev/tty.usbserial-A9007UX1",//Mac OS X
         "/dev/ttyUSB0",//linux
         "COM3",//Windows
+        "COM4",
+        "COM5",
+        "COM6",
+        "COM7",
+        "COM8",
     };
     private BufferedReader inputSerial;
     private OutputStream outputStream;
@@ -81,8 +87,9 @@ public class SerialPortRW implements SerialPortEventListener {
         if(oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE){
             try{
                 SerialPortRW.readSerial = inputSerial.readLine();
+                this.counter++;
                 //outputSerial.println("fucker");
-                //System.out.println(SerialPortRW.readSerial);
+                System.out.println(SerialPortRW.readSerial);
             }catch(Exception e){
                 System.err.println(e.toString());
             }

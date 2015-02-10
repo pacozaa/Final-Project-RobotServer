@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -177,9 +178,10 @@ public class RobotClient {
         }
         this.DebugLog("SerialRead is Start");
         while(true){
-            while(SerialPortRW.readSerial != null && SerialPortRW.counter>this.counterMain && SerialPortRW.readSerial != "/n" && SerialPortRW.readSerial != "\r"){
+            while(SerialPortRW.readSerial != null && SerialPortRW.counter>this.counterMain && SerialPortRW.readSerial != "\n" && SerialPortRW.readSerial != "\r"){
                 RobotClient.SerialInputLine = SerialPortRW.readSerial;
                 this.DebugLog("SerialRead : "+RobotClient.SerialInputLine + " Main : "+this.counterMain+" Event : "+SerialPortRW.counter);
+                this.DebugLog("SerialRead HEX : "+toHex(RobotClient.SerialInputLine));
                 this.counterMain= SerialPortRW.counter;
                 if(SerialPortRW.counter > 10){
                     SerialPortRW.counter=0;
@@ -215,6 +217,9 @@ public class RobotClient {
         }
     }
     
+    public String toHex(String arg) {
+        return String.format("%040x", new BigInteger(1, arg.getBytes(/*YOUR_CHARSET?*/)));
+    }
     
     
 }

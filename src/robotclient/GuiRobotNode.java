@@ -33,6 +33,8 @@ public class GuiRobotNode extends javax.swing.JFrame {
         StartSerialBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("ROBOT CLIENT");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         DebugLog.setColumns(20);
         DebugLog.setRows(5);
