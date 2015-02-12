@@ -5,6 +5,14 @@
  */
 package robotclient;
 
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
 
@@ -86,6 +94,32 @@ public class GuiRobotNode extends javax.swing.JFrame {
                 .addComponent(StartSerialBtn)
                 .addContainerGap(26, Short.MAX_VALUE))
         );
+
+        Action actionListenerKey = new AbstractAction() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                JButton source = (JButton) actionEvent.getSource();
+                //System.out.println("Activated: " + source.getText());
+                String tx=source.getText();
+                if(tx == "Connect"){
+                    ConnectBtn.doClick();
+                }
+                else if(tx == "Start Serial"){
+                    StartSerialBtn.doClick();
+                }
+            }
+        };
+
+        KeyStroke CON = KeyStroke.getKeyStroke("C");
+        InputMap inputMap = ConnectBtn.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        inputMap.put(CON, "The Action");
+        ActionMap actionMap = ConnectBtn.getActionMap();
+        actionMap.put("The Action", actionListenerKey);
+
+        KeyStroke StartSerial = KeyStroke.getKeyStroke("S");
+        inputMap = StartSerialBtn.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        inputMap.put(StartSerial, "The Action");
+        actionMap = StartSerialBtn.getActionMap();
+        actionMap.put("The Action", actionListenerKey);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
