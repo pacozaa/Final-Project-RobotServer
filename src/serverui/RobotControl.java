@@ -91,7 +91,7 @@ public class RobotControl {
         outTcp = new PrintWriter(clientSocket.getOutputStream(), true);
         inTcp = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         this.ConnectionStatus = "OK";
-        this.DebugLog(this.ConnectionStatus);
+        this.DebugLog("Connection Status : "+this.ConnectionStatus);
     }
     public void StreamDirectionToClient() throws IOException, InterruptedException{
         while(this.ConnectionStatus != "OK"){
@@ -102,6 +102,7 @@ public class RobotControl {
             this.DirectionStream = winframe.DirectionStream;
             if(this.DirectionStream != null){
                 outTcp.println(this.DirectionStream);
+                this.DebugLog("Send Stream TCP : "+this.DirectionStream);
                 this.DirectionStream = null;
                 winframe.DirectionStream = null;
             }
@@ -114,7 +115,7 @@ public class RobotControl {
         }
         while (true) {
             while ((ClientIn = inTcp.readLine()) != null) {
-                this.DebugLog("Server: " + ClientIn);
+                this.DebugLog("Recieve : " + ClientIn);
                 if (ClientIn.equals("Bye.")) {
                     this.Closeconnection();
                     break;

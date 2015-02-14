@@ -53,7 +53,8 @@ public class GuiControlNode extends javax.swing.JFrame{
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setText("STATUS");
+        jLabel1.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel1.setText("TCP Status : OFF");
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
@@ -273,22 +274,22 @@ public class GuiControlNode extends javax.swing.JFrame{
 
     private void GoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoActionPerformed
       this.DirectionStream = "W";
-      this.displayMessage("Hi_W");
+      this.displayMessage("Click/Press : W");
     }//GEN-LAST:event_GoActionPerformed
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
       this.DirectionStream = "S";
-      this.displayMessage("Hi_S");
+      this.displayMessage("Click/Press : S");
     }//GEN-LAST:event_BackActionPerformed
 
     private void RotateRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RotateRightActionPerformed
       this.DirectionStream = "D";
-      this.displayMessage("Hi_D");
+      this.displayMessage("Click/Press : D");
     }//GEN-LAST:event_RotateRightActionPerformed
 
     private void RotateLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RotateLeftActionPerformed
       this.DirectionStream = "A";
-      this.displayMessage("Hi_A");
+      this.displayMessage("Click/Press : A");
     }//GEN-LAST:event_RotateLeftActionPerformed
 
     private void ConToRobotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConToRobotActionPerformed
