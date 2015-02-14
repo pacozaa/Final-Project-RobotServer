@@ -38,7 +38,7 @@ public class GuiControlNode extends javax.swing.JFrame{
     private void initComponents() {
 
         ConSole = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblTCPStatus = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         Close = new javax.swing.JButton();
@@ -48,13 +48,24 @@ public class GuiControlNode extends javax.swing.JFrame{
         RotateRight = new javax.swing.JButton();
         ConToRobot = new javax.swing.JButton();
         ModeSelect = new javax.swing.JToggleButton();
+        lblRightWheel = new javax.swing.JLabel();
+        lblLeftWheel = new javax.swing.JLabel();
+        lblDirection = new javax.swing.JLabel();
+        btnTeach = new javax.swing.JButton();
+        btnLoad = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        cbxSelector = new javax.swing.JComboBox();
+        txtProgramName = new javax.swing.JTextField();
+        btnSaveLog = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
         GraphicMap = new J2d1();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("ROBOT CONTROL V0.01");
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel1.setText("TCP Status : OFF");
+        lblTCPStatus.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblTCPStatus.setForeground(new java.awt.Color(204, 0, 0));
+        lblTCPStatus.setText("TCP Status : OFF");
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
@@ -116,56 +127,119 @@ public class GuiControlNode extends javax.swing.JFrame{
             }
         });
 
+        lblRightWheel.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblRightWheel.setForeground(new java.awt.Color(0, 102, 0));
+        lblRightWheel.setText("RIGHT SPEED : 0 KM/H");
+
+        lblLeftWheel.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblLeftWheel.setForeground(new java.awt.Color(0, 102, 0));
+        lblLeftWheel.setText("LEFT SPEED : 0 KM/H");
+
+        lblDirection.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblDirection.setForeground(new java.awt.Color(0, 102, 0));
+        lblDirection.setText("Direction : None");
+
+        btnTeach.setText("TEACH");
+        btnTeach.setMaximumSize(new java.awt.Dimension(73, 25));
+        btnTeach.setMinimumSize(new java.awt.Dimension(73, 25));
+
+        btnLoad.setText("LOAD");
+        btnLoad.setMaximumSize(new java.awt.Dimension(73, 25));
+        btnLoad.setMinimumSize(new java.awt.Dimension(73, 25));
+
+        btnSave.setText("SAVE");
+
+        cbxSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        txtProgramName.setText("PROGRAMNAME");
+
+        btnSaveLog.setText("SAVE LOG");
+
+        btnClear.setText("Clear");
+
         javax.swing.GroupLayout ConSoleLayout = new javax.swing.GroupLayout(ConSole);
         ConSole.setLayout(ConSoleLayout);
         ConSoleLayout.setHorizontalGroup(
             ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ConSoleLayout.createSequentialGroup()
-                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(ConSoleLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(ConSoleLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(ConToRobot)
-                                .addGap(18, 18, 18)
-                                .addComponent(Close, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(ConSoleLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(ModeSelect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(ConSoleLayout.createSequentialGroup()
-                                .addComponent(RotateLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Go, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(ConSoleLayout.createSequentialGroup()
-                                        .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(RotateRight, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
+            .addGroup(ConSoleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblLeftWheel)
+                    .addGroup(ConSoleLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(ConToRobot)
+                        .addGap(18, 18, 18)
+                        .addComponent(Close, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTCPStatus)
+                    .addGroup(ConSoleLayout.createSequentialGroup()
+                        .addComponent(RotateLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Go, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(ConSoleLayout.createSequentialGroup()
+                                .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(RotateRight, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(ModeSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lblDirection)
+                        .addComponent(lblRightWheel)
+                        .addGroup(ConSoleLayout.createSequentialGroup()
+                            .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnLoad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnTeach, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                                .addComponent(btnSave, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(18, 18, 18)
+                            .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cbxSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtProgramName)))
+                        .addComponent(btnSaveLog, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         ConSoleLayout.setVerticalGroup(
             ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ConSoleLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Go, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(RotateLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(RotateRight, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(ConSoleLayout.createSequentialGroup()
+                        .addComponent(Go, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(RotateLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(RotateRight, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(ConSoleLayout.createSequentialGroup()
+                        .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnTeach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnSave)
+                            .addComponent(txtProgramName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLoad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(ModeSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ModeSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnClear))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTCPStatus)
+                    .addComponent(lblDirection))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblLeftWheel)
+                    .addComponent(lblRightWheel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Close)
-                    .addComponent(ConToRobot))
+                    .addComponent(ConToRobot)
+                    .addComponent(btnSaveLog))
                 .addContainerGap())
         );
 
@@ -374,9 +448,19 @@ public class GuiControlNode extends javax.swing.JFrame{
     private javax.swing.JToggleButton ModeSelect;
     private javax.swing.JButton RotateLeft;
     private javax.swing.JButton RotateRight;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnLoad;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSaveLog;
+    private javax.swing.JButton btnTeach;
+    private javax.swing.JComboBox cbxSelector;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    public javax.swing.JLabel lblDirection;
+    public javax.swing.JLabel lblLeftWheel;
+    public javax.swing.JLabel lblRightWheel;
+    public javax.swing.JLabel lblTCPStatus;
+    private javax.swing.JTextField txtProgramName;
     // End of variables declaration//GEN-END:variables
 }
 

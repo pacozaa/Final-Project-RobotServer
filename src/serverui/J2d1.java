@@ -49,6 +49,8 @@ public class J2d1 extends JPanel{
             g2d.fill(shape);            
         }
         g2d.setTransform(saveTransform);
+        g.drawString (Long.toString(System.currentTimeMillis()), 100, 300); 
+    repaint();
         
     }
     

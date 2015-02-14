@@ -1,11 +1,14 @@
 package serverui;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 class RecieveFromClient implements Runnable {
@@ -49,7 +52,8 @@ class Listening implements Runnable{
 }
 
 public class RobotControl {
-
+    Date dNow = new Date( );
+    SimpleDateFormat ft = new SimpleDateFormat ("E yyyy.MM.dd 'at' hh:mm:ss a zzz");
     byte s = 0;
     public static ServerSocket serverSocket = null;
     public static Socket clientSocket = null;
@@ -92,6 +96,8 @@ public class RobotControl {
         inTcp = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         this.ConnectionStatus = "OK";
         this.DebugLog("Connection Status : "+this.ConnectionStatus);
+        winframe.lblTCPStatus.setForeground(new java.awt.Color(0,102,0));
+        winframe.lblTCPStatus.setText("TCP Status : OK");
     }
     public void StreamDirectionToClient() throws IOException, InterruptedException{
         while(this.ConnectionStatus != "OK"){
@@ -139,13 +145,12 @@ public class RobotControl {
         serverSocket.close();
     }
 
-    public void DebugLog(String x) {
-        winframe.displayMessage(x);
-        logtofile();
+    public void DebugLog(String message) {
+        String NewMessage = ft.format(dNow)+" : "+message;
+        winframe.displayMessage(NewMessage);
+        System.out.println(NewMessage);
     }
 
-    private void logtofile() {
 
-    }
 
 }
