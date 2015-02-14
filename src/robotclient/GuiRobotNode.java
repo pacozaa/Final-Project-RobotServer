@@ -39,6 +39,8 @@ public class GuiRobotNode extends javax.swing.JFrame {
         ipText = new javax.swing.JTextField();
         ConnectBtn = new javax.swing.JButton();
         StartSerialBtn = new javax.swing.JButton();
+        lblStatusTCP = new javax.swing.JLabel();
+        lblStatusSerial = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ROBOT CLIENT");
@@ -65,6 +67,14 @@ public class GuiRobotNode extends javax.swing.JFrame {
             }
         });
 
+        lblStatusTCP.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lblStatusTCP.setForeground(new java.awt.Color(204, 0, 0));
+        lblStatusTCP.setText("TCP Status : OFF");
+
+        lblStatusSerial.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lblStatusSerial.setForeground(new java.awt.Color(204, 0, 0));
+        lblStatusSerial.setText("Serial COM Status : OFF");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -75,24 +85,34 @@ public class GuiRobotNode extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(ipText, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(ConnectBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(StartSerialBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblStatusSerial)
+                    .addComponent(lblStatusTCP))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(lblStatusTCP)
+                .addGap(18, 18, 18)
+                .addComponent(lblStatusSerial)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ipText, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ConnectBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(StartSerialBtn)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         Action actionListenerKey = new AbstractAction() {
@@ -189,5 +209,7 @@ public class GuiRobotNode extends javax.swing.JFrame {
     private javax.swing.JButton StartSerialBtn;
     public javax.swing.JTextField ipText;
     private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JLabel lblStatusSerial;
+    public javax.swing.JLabel lblStatusTCP;
     // End of variables declaration//GEN-END:variables
 }

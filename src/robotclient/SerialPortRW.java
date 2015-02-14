@@ -54,21 +54,25 @@ public class SerialPortRW implements SerialPortEventListener {
             }
         }
         if(portId == null){
-            System.out.println("Could not find COM port.");
+            System.out.println(this.toString()+" : Could not find COM port.");
+            SerialPortRW.SerialStatus = "Could not find COM port.";
         }
-        try{
-            serialPort = (SerialPort) portId.open(this.getClass().getName(), TIME_OUT);
-            serialPort.setSerialPortParams(DATA_RATE, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            //input = new BufferedReader(new InputStreamReader(serialPort.getInputStream()));
-            inputSerial = new BufferedReader(new InputStreamReader(serialPort.getInputStream()));
-            outputStream = serialPort.getOutputStream();
-            outputSerial = new PrintStream(outputStream);
-            serialPort.addEventListener(this);
-            serialPort.notifyOnDataAvailable(true);
-            //outputSerial.println("fucker");
-            SerialPortRW.SerialStatus = "OK";
-        }catch(PortInUseException | UnsupportedCommOperationException | IOException | TooManyListenersException e){
-            System.err.println(e.toString());
+        else{
+            try{
+                serialPort = (SerialPort) portId.open(this.getClass().getName(), TIME_OUT);
+                serialPort.setSerialPortParams(DATA_RATE, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                //input = new BufferedReader(new InputStreamReader(serialPort.getInputStream()));
+                inputSerial = new BufferedReader(new InputStreamReader(serialPort.getInputStream()));
+                outputStream = serialPort.getOutputStream(); 
+                outputSerial = new PrintStream(outputStream);
+                serialPort.addEventListener(this);
+                serialPort.notifyOnDataAvailable(true);
+                //outputSerial.println("fucker");
+                SerialPortRW.SerialStatus = "OK";
+            }catch(PortInUseException | UnsupportedCommOperationException | IOException | TooManyListenersException e){
+                System.err.println(e.toString());
+                SerialPortRW.SerialStatus = e.toString();
+            }
         }
     }
     
