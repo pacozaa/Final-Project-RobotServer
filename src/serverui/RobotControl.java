@@ -1,6 +1,7 @@
+//Note: Volatile Value for Thread
+//Button Work Flow for AutoMode Button Set and ManualMode Button Set
 package serverui;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,7 +23,6 @@ class RecieveFromClient implements Runnable {
             t.DebugLog(ex.getMessage());
         }
     }
-
 }
 
 class StreamDirection implements Runnable {
@@ -53,7 +53,7 @@ class Listening implements Runnable{
 
 public class RobotControl {
     Date dNow = new Date( );
-    SimpleDateFormat ft = new SimpleDateFormat ("E yyyy.MM.dd 'at' hh:mm:ss a zzz");
+    SimpleDateFormat ft = new SimpleDateFormat ("E yyyy.MM.dd 'at' hh:mm:ss a");
     byte s = 0;
     public static ServerSocket serverSocket = null;
     public static Socket clientSocket = null;
@@ -83,7 +83,6 @@ public class RobotControl {
                 winframe.setVisible(true);
             }
         });
-
     }
     public void Listening() throws IOException, InterruptedException{
         while(winframe.CheckListenbtn == false){ 

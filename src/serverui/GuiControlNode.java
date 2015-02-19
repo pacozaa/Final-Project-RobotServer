@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package serverui;
 
 import java.awt.event.ActionEvent;
@@ -40,7 +35,7 @@ public class GuiControlNode extends javax.swing.JFrame{
         ConSole = new javax.swing.JPanel();
         lblTCPStatus = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtAreaDebug = new javax.swing.JTextArea();
         Close = new javax.swing.JButton();
         Back = new javax.swing.JButton();
         Go = new javax.swing.JButton();
@@ -54,23 +49,32 @@ public class GuiControlNode extends javax.swing.JFrame{
         btnTeach = new javax.swing.JButton();
         btnLoad = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
-        cbxSelector = new javax.swing.JComboBox();
-        txtProgramName = new javax.swing.JTextField();
+        cbxFileSelector = new javax.swing.JComboBox();
+        txtPathName = new javax.swing.JTextField();
         btnSaveLog = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
+        cbxScaleSelector = new javax.swing.JComboBox();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAreaShowPath = new javax.swing.JTextArea();
         GraphicMap = new J2d1();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ROBOT CONTROL V0.01");
 
+        ConSole.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ConSoleMouseClicked(evt);
+            }
+        });
+
         lblTCPStatus.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblTCPStatus.setForeground(new java.awt.Color(204, 0, 0));
         lblTCPStatus.setText("TCP Status : OFF");
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtAreaDebug.setEditable(false);
+        txtAreaDebug.setColumns(20);
+        txtAreaDebug.setRows(5);
+        jScrollPane1.setViewportView(txtAreaDebug);
 
         Close.setText("Close");
         Close.addActionListener(new java.awt.event.ActionListener() {
@@ -142,6 +146,11 @@ public class GuiControlNode extends javax.swing.JFrame{
         btnTeach.setText("TEACH");
         btnTeach.setMaximumSize(new java.awt.Dimension(73, 25));
         btnTeach.setMinimumSize(new java.awt.Dimension(73, 25));
+        btnTeach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTeachActionPerformed(evt);
+            }
+        });
 
         btnLoad.setText("LOAD");
         btnLoad.setMaximumSize(new java.awt.Dimension(73, 25));
@@ -149,61 +158,76 @@ public class GuiControlNode extends javax.swing.JFrame{
 
         btnSave.setText("SAVE");
 
-        cbxSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxFileSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PATH 1", "PATH 2", "PATH 3", "PATH 4" }));
 
-        txtProgramName.setText("PROGRAMNAME");
+        txtPathName.setText("PATH NAME");
 
         btnSaveLog.setText("SAVE LOG");
 
-        btnClear.setText("Clear");
+        btnClear.setText("CLEAR");
+
+        cbxScaleSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SCALE 5m x 5m", "SCALE 10m x 10m", "SCALE 20m x 20m", "SCALE 50m x 50m", "SCALE 100m x 100m" }));
+
+        txtAreaShowPath.setColumns(20);
+        txtAreaShowPath.setRows(5);
+        jScrollPane2.setViewportView(txtAreaShowPath);
 
         javax.swing.GroupLayout ConSoleLayout = new javax.swing.GroupLayout(ConSole);
         ConSole.setLayout(ConSoleLayout);
         ConSoleLayout.setHorizontalGroup(
             ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
             .addGroup(ConSoleLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblLeftWheel)
                     .addGroup(ConSoleLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(ConToRobot)
-                        .addGap(18, 18, 18)
-                        .addComponent(Close, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblTCPStatus)
-                    .addGroup(ConSoleLayout.createSequentialGroup()
-                        .addComponent(RotateLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addContainerGap()
                         .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Go, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblLeftWheel)
                             .addGroup(ConSoleLayout.createSequentialGroup()
-                                .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(ConToRobot)
+                                .addGap(18, 18, 18)
+                                .addComponent(Close, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblTCPStatus)
+                            .addGroup(ConSoleLayout.createSequentialGroup()
+                                .addComponent(RotateLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(RotateRight, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(ModeSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
+                                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Go, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(ConSoleLayout.createSequentialGroup()
+                                        .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(RotateRight, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(ModeSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblDirection)
-                        .addComponent(lblRightWheel)
-                        .addGroup(ConSoleLayout.createSequentialGroup()
-                            .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnLoad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnTeach, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
-                                .addComponent(btnSave, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(18, 18, 18)
-                            .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cbxSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtProgramName)))
-                        .addComponent(btnSaveLog, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ConSoleLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lblDirection)
+                                .addComponent(lblRightWheel)
+                                .addGroup(ConSoleLayout.createSequentialGroup()
+                                    .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(btnLoad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnTeach, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                                        .addComponent(btnSave, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtPathName)
+                                        .addComponent(cbxScaleSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cbxFileSelector, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(btnSaveLog, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         ConSoleLayout.setVerticalGroup(
             ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ConSoleLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(ConSoleLayout.createSequentialGroup()
@@ -216,21 +240,23 @@ public class GuiControlNode extends javax.swing.JFrame{
                     .addGroup(ConSoleLayout.createSequentialGroup()
                         .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnTeach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbxScaleSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSave)
-                            .addComponent(txtProgramName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtPathName))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLoad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnLoad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxFileSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ModeSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClear))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTCPStatus)
-                    .addComponent(lblDirection))
+                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblDirection, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTCPStatus))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLeftWheel)
@@ -304,12 +330,25 @@ public class GuiControlNode extends javax.swing.JFrame{
         actionMap2.put("The Action", actionListenerKey2);
 
         GraphicMap.setBackground(new java.awt.Color(0, 0, 0));
+        GraphicMap.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                GraphicMapMouseDragged(evt);
+            }
+        });
+        GraphicMap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                GraphicMapMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                GraphicMapMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout GraphicMapLayout = new javax.swing.GroupLayout(GraphicMap);
         GraphicMap.setLayout(GraphicMapLayout);
         GraphicMapLayout.setHorizontalGroup(
             GraphicMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 708, Short.MAX_VALUE)
+            .addGap(0, 719, Short.MAX_VALUE)
         );
         GraphicMapLayout.setVerticalGroup(
             GraphicMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,6 +425,34 @@ public class GuiControlNode extends javax.swing.JFrame{
             RotateRight.setEnabled(true);
         }
     }//GEN-LAST:event_ModeSelectActionPerformed
+
+    private void ConSoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConSoleMouseClicked
+        System.out.println(evt.getPoint());
+    }//GEN-LAST:event_ConSoleMouseClicked
+
+    private void GraphicMapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMouseClicked
+        System.out.println(evt.getPoint());
+        
+        
+    }//GEN-LAST:event_GraphicMapMouseClicked
+
+    private void GraphicMapMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMouseDragged
+//        J2d1.xs2=evt.getX();
+//        J2d1.ys2=evt.getY();
+//        repaint();
+        J2d1.point2=evt.getPoint();
+        repaint(1000);
+        
+          
+    }//GEN-LAST:event_GraphicMapMouseDragged
+
+    private void GraphicMapMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMousePressed
+        J2d1.point1=evt.getPoint();
+    }//GEN-LAST:event_GraphicMapMousePressed
+
+    private void btnTeachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeachActionPerformed
+       J2d1.TeachStatus = true;
+    }//GEN-LAST:event_btnTeachActionPerformed
     public void windowClosing(WindowEvent e)
     {
         this.CheckDisconnectbtn = true;
@@ -398,7 +465,7 @@ public class GuiControlNode extends javax.swing.JFrame{
          {
             public void run() // updates displayArea
             {
-               jTextArea1.append( messageToDisplay+"\n" ); // append message
+               txtAreaDebug.append( messageToDisplay+"\n" ); // append message
             } // end method run
          } // end anonymous inner class
       ); // end call to SwingUtilities.invokeLater
@@ -453,14 +520,17 @@ public class GuiControlNode extends javax.swing.JFrame{
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSaveLog;
     private javax.swing.JButton btnTeach;
-    private javax.swing.JComboBox cbxSelector;
+    private javax.swing.JComboBox cbxFileSelector;
+    private javax.swing.JComboBox cbxScaleSelector;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JLabel lblDirection;
     public javax.swing.JLabel lblLeftWheel;
     public javax.swing.JLabel lblRightWheel;
     public javax.swing.JLabel lblTCPStatus;
-    private javax.swing.JTextField txtProgramName;
+    private javax.swing.JTextArea txtAreaDebug;
+    private javax.swing.JTextArea txtAreaShowPath;
+    private javax.swing.JTextField txtPathName;
     // End of variables declaration//GEN-END:variables
 }
 
