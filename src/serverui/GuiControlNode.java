@@ -1,8 +1,11 @@
 package serverui;
 
+import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import static java.lang.Math.abs;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
@@ -14,15 +17,16 @@ import javax.swing.JToggleButton;
 
 import javax.swing.SwingUtilities;
 
-public class GuiControlNode extends javax.swing.JFrame{
-
+public class GuiControlNode extends javax.swing.JFrame {
 
     public boolean CheckListenbtn = false;
     public boolean CheckDisconnectbtn = false;
     public String DirectionStream = null;
-    public GuiControlNode() throws IOException{
-        initComponents();    
+
+    public GuiControlNode() throws IOException {
+        initComponents();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,7 +60,7 @@ public class GuiControlNode extends javax.swing.JFrame{
         cbxScaleSelector = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAreaShowPath = new javax.swing.JTextArea();
-        GraphicMap = new J2d1();
+        GraphicMap = new serverui.CanVasMap();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ROBOT CONTROL V0.01");
@@ -143,6 +147,7 @@ public class GuiControlNode extends javax.swing.JFrame{
         lblDirection.setForeground(new java.awt.Color(0, 102, 0));
         lblDirection.setText("Direction : None");
 
+        btnTeach.setForeground(java.awt.Color.red);
         btnTeach.setText("TEACH");
         btnTeach.setMaximumSize(new java.awt.Dimension(73, 25));
         btnTeach.setMinimumSize(new java.awt.Dimension(73, 25));
@@ -342,6 +347,9 @@ public class GuiControlNode extends javax.swing.JFrame{
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 GraphicMapMousePressed(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                GraphicMapMouseReleased(evt);
+            }
         });
 
         javax.swing.GroupLayout GraphicMapLayout = new javax.swing.GroupLayout(GraphicMap);
@@ -380,29 +388,29 @@ public class GuiControlNode extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseActionPerformed
-      this.CheckDisconnectbtn = true;
-      this.dispose();
-      System.exit(0);
+        this.CheckDisconnectbtn = true;
+        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_CloseActionPerformed
 
     private void GoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoActionPerformed
-      this.DirectionStream = "W";
-      this.displayMessage("Click/Press : W");
+        this.DirectionStream = "W";
+        this.displayMessage("Click/Press : W");
     }//GEN-LAST:event_GoActionPerformed
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-      this.DirectionStream = "S";
-      this.displayMessage("Click/Press : S");
+        this.DirectionStream = "S";
+        this.displayMessage("Click/Press : S");
     }//GEN-LAST:event_BackActionPerformed
 
     private void RotateRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RotateRightActionPerformed
-      this.DirectionStream = "D";
-      this.displayMessage("Click/Press : D");
+        this.DirectionStream = "D";
+        this.displayMessage("Click/Press : D");
     }//GEN-LAST:event_RotateRightActionPerformed
 
     private void RotateLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RotateLeftActionPerformed
-      this.DirectionStream = "A";
-      this.displayMessage("Click/Press : A");
+        this.DirectionStream = "A";
+        this.displayMessage("Click/Press : A");
     }//GEN-LAST:event_RotateLeftActionPerformed
 
     private void ConToRobotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConToRobotActionPerformed
@@ -410,14 +418,13 @@ public class GuiControlNode extends javax.swing.JFrame{
     }//GEN-LAST:event_ConToRobotActionPerformed
 
     private void ModeSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModeSelectActionPerformed
-        if("MANUAL MODE".equals(ModeSelect.getText())){
+        if ("MANUAL MODE".equals(ModeSelect.getText())) {
             ModeSelect.setText("AUTO MODE");
             Go.setEnabled(false);
             Back.setEnabled(false);
             RotateLeft.setEnabled(false);
             RotateRight.setEnabled(false);
-        }
-        else if("AUTO MODE".equals(ModeSelect.getText())){
+        } else if ("AUTO MODE".equals(ModeSelect.getText())) {
             ModeSelect.setText("MANUAL MODE");
             Go.setEnabled(true);
             Back.setEnabled(true);
@@ -432,43 +439,55 @@ public class GuiControlNode extends javax.swing.JFrame{
 
     private void GraphicMapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMouseClicked
         System.out.println(evt.getPoint());
-        
-        
+
+
     }//GEN-LAST:event_GraphicMapMouseClicked
 
     private void GraphicMapMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMouseDragged
-//        J2d1.xs2=evt.getX();
-//        J2d1.ys2=evt.getY();
-//        repaint();
-        J2d1.point2=evt.getPoint();
-        repaint(1000);
-        
-          
+        if (abs(evt.getX() - CanVasMap.PolyStartPoint.get(CanVasMap.StartLineIndex).x) > abs(evt.getY() - CanVasMap.PolyStartPoint.get(CanVasMap.StartLineIndex).y)) {
+            CanVasMap.PolyEndPoint.add(CanVasMap.StartLineIndex, new Point(evt.getX(), CanVasMap.PolyStartPoint.get(CanVasMap.StartLineIndex).y));
+        } else {
+            CanVasMap.PolyEndPoint.add(CanVasMap.StartLineIndex, new Point(CanVasMap.PolyStartPoint.get(CanVasMap.StartLineIndex).x, evt.getY()));
+        }
+        repaint();
     }//GEN-LAST:event_GraphicMapMouseDragged
 
     private void GraphicMapMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMousePressed
-        J2d1.point1=evt.getPoint();
+        CanVasMap.StartLineIndex++;
+        if (CanVasMap.StartLineIndex == 0) {
+            CanVasMap.PolyStartPoint.add(CanVasMap.StartLineIndex, evt.getPoint());
+            System.out.println("SHIT : " + CanVasMap.PolyStartPoint.get(CanVasMap.PolyStartPoint.size() - 1));
+        } else {
+            CanVasMap.PolyStartPoint.add(CanVasMap.StartLineIndex, CanVasMap.PolyEndPoint.get(CanVasMap.StartLineIndex - 1));
+        }
     }//GEN-LAST:event_GraphicMapMousePressed
 
     private void btnTeachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeachActionPerformed
-       J2d1.TeachStatus = true;
+        if (CanVasMap.TeachStatus == false) {
+            CanVasMap.TeachStatus = true;
+            btnTeach.setForeground(new Color(0, 102, 0));
+        } else {
+            CanVasMap.TeachStatus = false;
+            btnTeach.setForeground(Color.red);
+        }
     }//GEN-LAST:event_btnTeachActionPerformed
-    public void windowClosing(WindowEvent e)
-    {
+
+    private void GraphicMapMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMouseReleased
+        System.out.println("Release");
+    }//GEN-LAST:event_GraphicMapMouseReleased
+    public void windowClosing(WindowEvent e) {
         this.CheckDisconnectbtn = true;
     }
-    
-    public void displayMessage( final String messageToDisplay )
-    {
-      SwingUtilities.invokeLater(
-         new Runnable() 
-         {
-            public void run() // updates displayArea
-            {
-               txtAreaDebug.append( messageToDisplay+"\n" ); // append message
-            } // end method run
-         } // end anonymous inner class
-      ); // end call to SwingUtilities.invokeLater
+
+    public void displayMessage(final String messageToDisplay) {
+        SwingUtilities.invokeLater(
+                new Runnable() {
+                    public void run() // updates displayArea
+                    {
+                        txtAreaDebug.append(messageToDisplay + "\n"); // append message
+                    } // end method run
+                } // end anonymous inner class
+        ); // end call to SwingUtilities.invokeLater
     } // end method displayMessage
     /**
      * @param args the command line arguments
@@ -533,4 +552,3 @@ public class GuiControlNode extends javax.swing.JFrame{
     private javax.swing.JTextField txtPathName;
     // End of variables declaration//GEN-END:variables
 }
-
