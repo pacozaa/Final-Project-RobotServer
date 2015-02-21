@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 import static java.lang.Math.abs;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
@@ -61,6 +64,7 @@ public class GuiControlNode extends javax.swing.JFrame {
         cbxScaleSelector = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAreaShowPath = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
         GraphicMap = new serverui.Map();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -163,10 +167,13 @@ public class GuiControlNode extends javax.swing.JFrame {
         btnLoad.setMinimumSize(new java.awt.Dimension(73, 25));
 
         btnSave.setText("SAVE");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
-        cbxFileSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PATH 1", "PATH 2", "PATH 3", "PATH 4" }));
-
-        txtPathName.setText("PATH NAME");
+        txtPathName.setText(".txt");
 
         btnSaveLog.setText("SAVE LOG");
 
@@ -177,11 +184,13 @@ public class GuiControlNode extends javax.swing.JFrame {
             }
         });
 
-        cbxScaleSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SCALE 5m x 5m", "SCALE 10m x 10m", "SCALE 20m x 20m", "SCALE 50m x 50m", "SCALE 100m x 100m" }));
+        cbxScaleSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "5m", "10m", "50m", "100m" }));
 
         txtAreaShowPath.setColumns(20);
         txtAreaShowPath.setRows(5);
         jScrollPane2.setViewportView(txtAreaShowPath);
+
+        jButton1.setText("START/STOP");
 
         javax.swing.GroupLayout ConSoleLayout = new javax.swing.GroupLayout(ConSole);
         ConSole.setLayout(ConSoleLayout);
@@ -214,22 +223,24 @@ public class GuiControlNode extends javax.swing.JFrame {
                 .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ConSoleLayout.createSequentialGroup()
                         .addGap(29, 29, 29)
-                        .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lblDirection)
-                                .addComponent(lblRightWheel)
-                                .addGroup(ConSoleLayout.createSequentialGroup()
-                                    .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(btnLoad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnTeach, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
-                                        .addComponent(btnSave, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtPathName)
-                                        .addComponent(cbxScaleSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cbxFileSelector, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addComponent(btnSaveLog, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblDirection)
+                            .addComponent(lblRightWheel)
+                            .addGroup(ConSoleLayout.createSequentialGroup()
+                                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(btnLoad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnTeach, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                                    .addComponent(btnSave, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPathName)
+                                    .addComponent(cbxScaleSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbxFileSelector, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(btnSaveLog, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(ConSoleLayout.createSequentialGroup()
+                                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -263,7 +274,9 @@ public class GuiControlNode extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ModeSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnClear))
+                    .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnClear)
+                        .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDirection, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -339,6 +352,13 @@ public class GuiControlNode extends javax.swing.JFrame {
         inputMap2.put(E_ModeSelect, "The Action");
         ActionMap actionMap2 = ModeSelect.getActionMap();
         actionMap2.put("The Action", actionListenerKey2);
+        File folder = new File(System.getProperty("user.dir"));
+        File[] listOfFiles = folder.listFiles();
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile() && (listOfFiles[i].getName().contains("txt"))) {
+                cbxFileSelector.addItem(listOfFiles[i].getName());
+            }
+        }
 
         GraphicMap.setBackground(new java.awt.Color(0, 0, 0));
         GraphicMap.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -448,16 +468,16 @@ public class GuiControlNode extends javax.swing.JFrame {
     }//GEN-LAST:event_GraphicMapMouseClicked
 
     private void GraphicMapMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMouseDragged
-        if(Map.TeachStatus == true){
+        if (Map.TeachStatus == true) {
             DragStatus = "Drag";
-        if (abs(evt.getX() - Map.PolyStartPoint.get(Map.DIndex).x) > abs(evt.getY() - Map.PolyStartPoint.get(Map.DIndex).y)) {
-            Map.PolyEndPoint.add(Map.DIndex, new Point(evt.getX(), Map.PolyStartPoint.get(Map.DIndex).y));
-        } else {
-            Map.PolyEndPoint.add(Map.DIndex, new Point(Map.PolyStartPoint.get(Map.DIndex).x, evt.getY()));
+            if (abs(evt.getX() - Map.PolyStartPoint.get(Map.DIndex).x) > abs(evt.getY() - Map.PolyStartPoint.get(Map.DIndex).y)) {
+                Map.PolyEndPoint.add(Map.DIndex, new Point(evt.getX(), Map.PolyStartPoint.get(Map.DIndex).y));
+            } else {
+                Map.PolyEndPoint.add(Map.DIndex, new Point(Map.PolyStartPoint.get(Map.DIndex).x, evt.getY()));
+            }
+            repaint();
         }
-        repaint();
-        }
-        
+
     }//GEN-LAST:event_GraphicMapMouseDragged
 
     private void GraphicMapMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMousePressed
@@ -485,15 +505,34 @@ public class GuiControlNode extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTeachActionPerformed
 
     private void GraphicMapMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMouseReleased
-        if ("Drag".equals(DragStatus)) {
-            Map.DIndex++;
+        if (Map.TeachStatus == true) {
+            if (Map.PolyStartPoint.size() > 1) {
+                this.displayMapStatus(Map.DIndex+" Strat Point : " + Map.PolyStartPoint.get(Map.DIndex) +"\n"+Map.DIndex+"End Point : " + Map.PolyEndPoint.get(Map.DIndex));
+            }
+            if ("Drag".equals(DragStatus)) {
+                Map.DIndex++;
+            }          
+            txtPathName.requestFocus();
+            txtPathName.selectAll();
         }
+
 
     }//GEN-LAST:event_GraphicMapMouseReleased
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        Map.AnalystPath();
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        Map.AnalystPath();
+        if (Map.PolyEndPoint.size() >= 0) {
+            try {
+                Map.SaveMapToXMLFile(txtPathName.getText());
+            } catch (IOException ex) {
+                System.out.println(ex.toString());
+            }
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
     public void windowClosing(WindowEvent e) {
         this.CheckDisconnectbtn = true;
     }
@@ -504,6 +543,17 @@ public class GuiControlNode extends javax.swing.JFrame {
                     public void run() // updates displayArea
                     {
                         txtAreaDebug.append(messageToDisplay + "\n"); // append message
+                    } // end method run
+                } // end anonymous inner class
+        ); // end call to SwingUtilities.invokeLater
+    } // end method displayMessage
+
+    public void displayMapStatus(final String messageToDisplay) {
+        SwingUtilities.invokeLater(
+                new Runnable() {
+                    public void run() // updates displayArea
+                    {
+                        txtAreaShowPath.append(messageToDisplay + "\n"); // append message
                     } // end method run
                 } // end anonymous inner class
         ); // end call to SwingUtilities.invokeLater
@@ -560,6 +610,7 @@ public class GuiControlNode extends javax.swing.JFrame {
     private javax.swing.JButton btnTeach;
     private javax.swing.JComboBox cbxFileSelector;
     private javax.swing.JComboBox cbxScaleSelector;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JLabel lblDirection;

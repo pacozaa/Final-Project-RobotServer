@@ -89,26 +89,28 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="lblDirection" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblRightWheel" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="btnLoad" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="btnTeach" alignment="0" pref="73" max="32767" attributes="0"/>
-                                          <Component id="btnSave" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txtPathName" max="32767" attributes="0"/>
-                                          <Component id="cbxScaleSelector" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="cbxFileSelector" alignment="1" max="32767" attributes="0"/>
-                                      </Group>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblDirection" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblRightWheel" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="btnLoad" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="btnTeach" alignment="0" pref="73" max="32767" attributes="0"/>
+                                      <Component id="btnSave" alignment="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="btnSaveLog" alignment="0" min="-2" pref="103" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="txtPathName" max="32767" attributes="0"/>
+                                      <Component id="cbxScaleSelector" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="cbxFileSelector" alignment="1" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <Component id="btnClear" min="-2" pref="73" max="-2" attributes="0"/>
+                              <Component id="btnSaveLog" alignment="0" min="-2" pref="103" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="btnClear" min="-2" pref="73" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jButton1" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <Component id="jScrollPane2" alignment="1" min="-2" pref="259" max="-2" attributes="0"/>
@@ -155,7 +157,10 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="ModeSelect" min="-2" pref="52" max="-2" attributes="0"/>
-                      <Component id="btnClear" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnClear" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -361,22 +366,23 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="SAVE"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="cbxFileSelector">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="PATH 1"/>
-                <StringItem index="1" value="PATH 2"/>
-                <StringItem index="2" value="PATH 3"/>
-                <StringItem index="3" value="PATH 4"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="File folder = new File(System.getProperty(&quot;user.dir&quot;));&#xa;File[] listOfFiles = folder.listFiles();&#xa;for (int i = 0; i &lt; listOfFiles.length; i++) {&#xa;      if (listOfFiles[i].isFile() &amp;&amp; (listOfFiles[i].getName().contains(&quot;txt&quot;))) {&#xa;        cbxFileSelector.addItem(listOfFiles[i].getName());&#xa;      }&#xa;    }"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="txtPathName">
           <Properties>
-            <Property name="text" type="java.lang.String" value="PATH NAME"/>
+            <Property name="text" type="java.lang.String" value=".txt"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnSaveLog">
@@ -395,12 +401,11 @@
         <Component class="javax.swing.JComboBox" name="cbxScaleSelector">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="SCALE 5m x 5m"/>
-                <StringItem index="1" value="SCALE 10m x 10m"/>
-                <StringItem index="2" value="SCALE 20m x 20m"/>
-                <StringItem index="3" value="SCALE 50m x 50m"/>
-                <StringItem index="4" value="SCALE 100m x 100m"/>
+              <StringArray count="4">
+                <StringItem index="0" value="5m"/>
+                <StringItem index="1" value="10m"/>
+                <StringItem index="2" value="50m"/>
+                <StringItem index="3" value="100m"/>
               </StringArray>
             </Property>
           </Properties>
@@ -420,6 +425,11 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="START/STOP"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="GraphicMap">
