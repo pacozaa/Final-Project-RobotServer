@@ -66,6 +66,7 @@ public class RobotControl {
     public static String ClientIn;
     public static int LWheelServer = 0;
     public static int RWheelServer = 0;
+    public static String IODirectionBuffer = null;
     
     
     public static void main(String[] args) throws IOException {
@@ -149,6 +150,7 @@ public class RobotControl {
         winframe.displayMessage(NewMessage);
         System.out.println(NewMessage);
     }
+
 
 
 

@@ -22,6 +22,7 @@ public class GuiControlNode extends javax.swing.JFrame {
     public boolean CheckListenbtn = false;
     public boolean CheckDisconnectbtn = false;
     public String DirectionStream = null;
+    public static String DragStatus = "";
 
     public GuiControlNode() throws IOException {
         initComponents();
@@ -60,7 +61,7 @@ public class GuiControlNode extends javax.swing.JFrame {
         cbxScaleSelector = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAreaShowPath = new javax.swing.JTextArea();
-        GraphicMap = new serverui.CanVasMap();
+        GraphicMap = new serverui.Map();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ROBOT CONTROL V0.01");
@@ -170,6 +171,11 @@ public class GuiControlNode extends javax.swing.JFrame {
         btnSaveLog.setText("SAVE LOG");
 
         btnClear.setText("CLEAR");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         cbxScaleSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SCALE 5m x 5m", "SCALE 10m x 10m", "SCALE 20m x 20m", "SCALE 50m x 50m", "SCALE 100m x 100m" }));
 
@@ -434,47 +440,60 @@ public class GuiControlNode extends javax.swing.JFrame {
     }//GEN-LAST:event_ModeSelectActionPerformed
 
     private void ConSoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConSoleMouseClicked
-        System.out.println(evt.getPoint());
+
     }//GEN-LAST:event_ConSoleMouseClicked
 
     private void GraphicMapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMouseClicked
         System.out.println(evt.getPoint());
-
-
     }//GEN-LAST:event_GraphicMapMouseClicked
 
     private void GraphicMapMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMouseDragged
-        if (abs(evt.getX() - CanVasMap.PolyStartPoint.get(CanVasMap.StartLineIndex).x) > abs(evt.getY() - CanVasMap.PolyStartPoint.get(CanVasMap.StartLineIndex).y)) {
-            CanVasMap.PolyEndPoint.add(CanVasMap.StartLineIndex, new Point(evt.getX(), CanVasMap.PolyStartPoint.get(CanVasMap.StartLineIndex).y));
+        if(Map.TeachStatus == true){
+            DragStatus = "Drag";
+        if (abs(evt.getX() - Map.PolyStartPoint.get(Map.DIndex).x) > abs(evt.getY() - Map.PolyStartPoint.get(Map.DIndex).y)) {
+            Map.PolyEndPoint.add(Map.DIndex, new Point(evt.getX(), Map.PolyStartPoint.get(Map.DIndex).y));
         } else {
-            CanVasMap.PolyEndPoint.add(CanVasMap.StartLineIndex, new Point(CanVasMap.PolyStartPoint.get(CanVasMap.StartLineIndex).x, evt.getY()));
+            Map.PolyEndPoint.add(Map.DIndex, new Point(Map.PolyStartPoint.get(Map.DIndex).x, evt.getY()));
         }
         repaint();
+        }
+        
     }//GEN-LAST:event_GraphicMapMouseDragged
 
     private void GraphicMapMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMousePressed
-        CanVasMap.StartLineIndex++;
-        if (CanVasMap.StartLineIndex == 0) {
-            CanVasMap.PolyStartPoint.add(CanVasMap.StartLineIndex, evt.getPoint());
-            System.out.println("SHIT : " + CanVasMap.PolyStartPoint.get(CanVasMap.PolyStartPoint.size() - 1));
-        } else {
-            CanVasMap.PolyStartPoint.add(CanVasMap.StartLineIndex, CanVasMap.PolyEndPoint.get(CanVasMap.StartLineIndex - 1));
+
+        if (Map.TeachStatus == true) {
+            if (Map.DIndex == 0) {
+                Map.PolyStartPoint.add(Map.DIndex, evt.getPoint());
+            }
+            if (Map.DIndex != 0 && "Drag".equals(DragStatus)) {
+                Map.PolyStartPoint.add(Map.DIndex, Map.PolyEndPoint.get(Map.DIndex - 1));
+            }
         }
+
+
     }//GEN-LAST:event_GraphicMapMousePressed
 
     private void btnTeachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeachActionPerformed
-        if (CanVasMap.TeachStatus == false) {
-            CanVasMap.TeachStatus = true;
+        if (Map.TeachStatus == false) {
+            Map.TeachStatus = true;
             btnTeach.setForeground(new Color(0, 102, 0));
         } else {
-            CanVasMap.TeachStatus = false;
+            Map.TeachStatus = false;
             btnTeach.setForeground(Color.red);
         }
     }//GEN-LAST:event_btnTeachActionPerformed
 
     private void GraphicMapMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMouseReleased
-        System.out.println("Release");
+        if ("Drag".equals(DragStatus)) {
+            Map.DIndex++;
+        }
+
     }//GEN-LAST:event_GraphicMapMouseReleased
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        Map.AnalystPath();
+    }//GEN-LAST:event_btnClearActionPerformed
     public void windowClosing(WindowEvent e) {
         this.CheckDisconnectbtn = true;
     }
