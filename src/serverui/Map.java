@@ -6,9 +6,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Line2D;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JPanel;
@@ -26,10 +29,10 @@ public class Map extends JPanel {
     public static ArrayList<Point> PolyEndPoint = new ArrayList<>();
     public static ArrayList<String> CoreStep = new ArrayList<>();
     public static ArrayList<String> CoreDirection = new ArrayList<>();
-    public static ArrayList<String> CoreStepLength = new ArrayList<>();
     public static ArrayList<Integer> IndexOfLen = new ArrayList<>();
     private static String DirectionBuffer;
     private static String StepBuffer;
+    public static String ReadMap;
 
     @Override
     public void paintComponent(Graphics g) {
@@ -88,8 +91,8 @@ public class Map extends JPanel {
                     StepBuffer = "Left";
                 }
                 IndexOfLen.add(i, j);
-                int Len = getLenght(PolyStartPoint.get(i), PolyEndPoint.get(i));
-                CoreStep.add(j++, Integer.toString(Len));
+                Double Len = getLenght(PolyStartPoint.get(i), PolyEndPoint.get(i));
+                CoreStep.add(j++, Double.toString(Len));
                 CoreStep.add(j++, StepBuffer);
             }
         }
@@ -97,29 +100,74 @@ public class Map extends JPanel {
         System.out.println(CoreStep.toString());
     }
 
-    public static int getLenght(Point Start, Point End) {
+    public static Double getLenght(Point Start, Point End) {
         int xLen = End.x - Start.x;
         int yLen = End.y - Start.y;
         if (xLen == 0) {
-            return yLen;
+            String selected = GuiControlNode.cbxScaleSelector.getSelectedItem().toString().replace("m", "");
+            Double Scale = Double.parseDouble(selected);
+            Double ActLen = (yLen / GuiControlNode.GraphicMap.getSize().height) * Scale;
+            return ActLen;
         } else {
-            return xLen;
+            String selected = GuiControlNode.cbxScaleSelector.getSelectedItem().toString().replace("m", "");
+            Double Scale = Double.parseDouble(selected);
+            Double ActLen = (yLen / GuiControlNode.GraphicMap.getSize().width) * Scale;
+            return ActLen;
         }
     }
 
-    public static void SaveMapToXMLFile(String FileName) throws FileNotFoundException, IOException {
-        String Content = CoreStep.toString() + "#" + IndexOfLen.toString() + "#" + PolyStartPoint.toString() + "#" + PolyEndPoint.toString();
-        File file = new File(FileName);
-        if (!file.exists()) {
-            file.createNewFile();
+    public static void SaveMapToTextFile(String FileName) throws FileNotFoundException, IOException {
+        if (Map.TeachStatus == true) {
+            String Content;
+            String StartX=null;
+            String StartY=null;
+            String EndX=null;
+            String EndY=null;
+            for(int i=0;PolyStartPoint.size()>0;i++){
+                StartX = String.valueOf(PolyStartPoint.get(i).x)+",";
+                StartY = String.valueOf(PolyStartPoint.get(i).y)+",";
+                EndX = String.valueOf(PolyEndPoint.get(i).x)+",";
+                EndY = String.valueOf(PolyEndPoint.get(i).y)+",";
+            }
+            Content = CoreStep.toString() + "#" + IndexOfLen.toString() + "#" +StartX+"#"+StartY+ "#" +EndX+"#"+EndY;
+            try {
+                File file = new File(FileName);
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+                FileWriter fw = new FileWriter(file.getAbsoluteFile());
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write(Content);
+                bw.close();
+                System.out.println("CoreStep : " + CoreStep.toString());
+                System.out.println("Done Save File : " + FileName);
+                GuiControlNode.btnTeach.doClick();
+                Map.PolyStartPoint.clear();
+                Map.PolyEndPoint.clear();
+                Map.CoreStep.clear();
+                Map.CoreDirection.clear();
+                Map.IndexOfLen.clear();
+                Map.DirectionBuffer = null;
+                Map.StepBuffer = null;
+                System.out.println("Clear Buffer");
+
+            } catch (IOException e) {
+                System.out.println("Error : " + e.toString());
+            }
         }
-        FileOutputStream fop = new FileOutputStream(FileName);
-        byte[] contentInBytes = Content.getBytes();
-        fop.write(contentInBytes);
-        fop.flush();
-        fop.close();
-        System.out.println("CoreStep : "+CoreStep.toString());
-        System.out.println("Done Save File : "+FileName);   
+    }
+    public void LoadFile(String FileName) {
+        try (BufferedReader br = new BufferedReader(new FileReader(FileName))) {
+            String sCurrentLine;
+            Map.ReadMap = null;
+            while ((sCurrentLine = br.readLine()) != null) {
+                System.out.println("Read File : " + sCurrentLine);
+                Map.ReadMap += sCurrentLine;
+            }
+            String[] LoadBuffer = Map.ReadMap.split("#");
+        } catch (IOException e) {
+            System.out.println("Error : " + e.toString());
+        }
     }
 
 }
