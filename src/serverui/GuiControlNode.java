@@ -496,7 +496,7 @@ public class GuiControlNode extends javax.swing.JFrame {
             cbxFileSelector.setEnabled(false);
             txtPathName.setEnabled(false);
             cbxScaleSelector.setEnabled(false);
-            
+
         }
     }//GEN-LAST:event_ModeSelectActionPerformed
 
@@ -518,6 +518,7 @@ public class GuiControlNode extends javax.swing.JFrame {
             }
             repaint();
         }
+        
 
     }//GEN-LAST:event_GraphicMapMouseDragged
 
@@ -539,21 +540,25 @@ public class GuiControlNode extends javax.swing.JFrame {
         if (Map.TeachStatus == false) {
             Map.TeachStatus = true;
             btnSave.setEnabled(true);
+            btnLoad.setEnabled(false);
             btnTeach.setForeground(new Color(0, 102, 0));
         } else {
             Map.TeachStatus = false;
             btnTeach.setForeground(Color.red);
+            btnLoad.setEnabled(true);
+            btnSave.setEnabled(false);
         }
     }//GEN-LAST:event_btnTeachActionPerformed
 
     private void GraphicMapMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphicMapMouseReleased
         if (Map.TeachStatus == true) {
-            if (Map.PolyStartPoint.size() > 1) {
-                this.displayMapStatus(Map.CoreStep.toString());
+            if (Map.PolyStartPoint.size() > 0) {
+                Double len = Map.getLenght(Map.PolyStartPoint.get(Map.DIndex), Map.PolyEndPoint.get(Map.DIndex));
+                this.displayMapStatus(Map.PolyStartPoint.get(Map.DIndex).toString() + " to " + Map.PolyEndPoint.get(Map.DIndex).toString() + " = " + len.toString() + " meters");
             }
             if ("Drag".equals(DragStatus)) {
                 Map.DIndex++;
-            }          
+            }
             txtPathName.requestFocus();
             txtPathName.selectAll();
         }
@@ -566,18 +571,36 @@ public class GuiControlNode extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        Map.AnalystPath();
-        if (Map.PolyEndPoint.size() >= 0) {
-            try {
-                Map.SaveMapToTextFile(txtPathName.getText());
-            } catch (IOException ex) {
-                System.out.println(ex.toString());
+        if (Map.TeachStatus == true) {
+            if (Map.PolyEndPoint.size() > 0) {
+                Map.AnalystPath();
+                try {
+                    Map.SaveMapToTextFile(txtPathName.getText());
+                    File folder = new File(System.getProperty("user.dir"));
+                    File[] listOfFiles = folder.listFiles();
+                    for (int i = 0; i < listOfFiles.length; i++) {
+                        if (listOfFiles[i].isFile() && (listOfFiles[i].getName().contains("txt"))) {
+                            cbxFileSelector.addItem(listOfFiles[i].getName());
+                        }
+                    }
+                } catch (IOException ex) {
+                    System.out.println(ex.toString());
+                }
             }
         }
+
+
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
-        // TODO add your handling code here:
+
+        boolean checkit = Map.LoadFile(cbxFileSelector.getSelectedItem().toString());
+        if (checkit == true) {
+            repaint();
+        } else {
+            System.err.println("File Format Fial");
+        }
+
     }//GEN-LAST:event_btnLoadActionPerformed
     public void windowClosing(WindowEvent e) {
         this.CheckDisconnectbtn = true;
@@ -593,7 +616,6 @@ public class GuiControlNode extends javax.swing.JFrame {
                 } // end anonymous inner class
         ); // end call to SwingUtilities.invokeLater
     } // end method displayMessage
-
     public void displayMapStatus(final String messageToDisplay) {
         SwingUtilities.invokeLater(
                 new Runnable() {
@@ -651,7 +673,7 @@ public class GuiControlNode extends javax.swing.JFrame {
     private javax.swing.JButton RotateRight;
     private javax.swing.JButton btnAuto;
     private javax.swing.JButton btnClear;
-    private static javax.swing.JButton btnLoad;
+    private javax.swing.JButton btnLoad;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSaveLog;
     public static javax.swing.JButton btnTeach;
