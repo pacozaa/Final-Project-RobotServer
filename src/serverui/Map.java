@@ -13,17 +13,22 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import static java.lang.Math.abs;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JPanel;
 
 public class Map extends JPanel {
 
     public static boolean TeachStatus = false;
+    public static boolean LoadStatus = false;
+
+    
     int[] polygonXs = {1, 133, 58, 139, 134};
     int[] polygonYs = {1, 133, 50, 2, 4};
     public static int xs2 = 1, ys2 = 1;
     public static float xl1 = 30, xl2 = 30, yl1 = 200, yl2 = 30;
-    Point defaultPoint = new Point(0, 0);
     public static int DIndex = 0;
     public static ArrayList<Point> PolyStartPoint = new ArrayList<>();
     public static ArrayList<Point> PolyEndPoint = new ArrayList<>();
@@ -33,15 +38,15 @@ public class Map extends JPanel {
     private static String DirectionBuffer;
     private static String StepBuffer;
     public static String ReadMap;
-
+    public static boolean OpStatus = true;
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         setBackground(Color.BLACK);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.PINK);
+        g2d.setColor(Color.BLUE);
         g2d.setStroke(new BasicStroke(5));
-        if (Map.TeachStatus == true) {
+        if (Map.TeachStatus == true || Map.LoadStatus == true) {
             for (int i = 0; i < PolyStartPoint.size(); i++) {
                 g2d.draw(new Line2D.Float(PolyStartPoint.get(i), PolyEndPoint.get(i)));
             }
@@ -93,7 +98,7 @@ public class Map extends JPanel {
                 IndexOfLen.add(i, j);
                 Double Len = getLenght(PolyStartPoint.get(i), PolyEndPoint.get(i));
                 CoreStep.add(j++, Double.toString(Len));
-                CoreStep.add(j++, StepBuffer);
+                CoreStep.add(j++, StepBuffer); 
             }
         }
         System.out.println(CoreStep);
@@ -103,15 +108,21 @@ public class Map extends JPanel {
     public static Double getLenght(Point Start, Point End) {
         int xLen = End.x - Start.x;
         int yLen = End.y - Start.y;
+        Double ActLen = null;
+        Double sActLen = null;
         if (xLen == 0) {
             String selected = GuiControlNode.cbxScaleSelector.getSelectedItem().toString().replace("m", "");
             Double Scale = Double.parseDouble(selected);
-            Double ActLen = (yLen / GuiControlNode.GraphicMap.getSize().height) * Scale;
+            sActLen = ((double)yLen / GuiControlNode.GraphicMap.getSize().height) * Scale;
+            ActLen = new BigDecimal(sActLen).setScale(3, BigDecimal.ROUND_HALF_DOWN).doubleValue();
+            ActLen = abs(ActLen);
             return ActLen;
         } else {
             String selected = GuiControlNode.cbxScaleSelector.getSelectedItem().toString().replace("m", "");
             Double Scale = Double.parseDouble(selected);
-            Double ActLen = (yLen / GuiControlNode.GraphicMap.getSize().width) * Scale;
+            sActLen = ((double)xLen / GuiControlNode.GraphicMap.getSize().width) * Scale;
+            ActLen = new BigDecimal(sActLen).setScale(3, BigDecimal.ROUND_HALF_DOWN).doubleValue();
+            ActLen = abs(ActLen);
             return ActLen;
         }
     }
@@ -119,17 +130,17 @@ public class Map extends JPanel {
     public static void SaveMapToTextFile(String FileName) throws FileNotFoundException, IOException {
         if (Map.TeachStatus == true) {
             String Content;
-            String StartX=null;
-            String StartY=null;
-            String EndX=null;
-            String EndY=null;
-            for(int i=0;PolyStartPoint.size()>0;i++){
-                StartX = String.valueOf(PolyStartPoint.get(i).x)+",";
-                StartY = String.valueOf(PolyStartPoint.get(i).y)+",";
-                EndX = String.valueOf(PolyEndPoint.get(i).x)+",";
-                EndY = String.valueOf(PolyEndPoint.get(i).y)+",";
+            String StartX = "";
+            String StartY = "";
+            String EndX = "";
+            String EndY = "";
+            for (int i = 0; i < PolyStartPoint.size(); i++) {
+                StartX += String.valueOf(PolyStartPoint.get(i).x) + ",";
+                StartY += String.valueOf(PolyStartPoint.get(i).y) + ",";
+                EndX += String.valueOf(PolyEndPoint.get(i).x) + ",";
+                EndY += String.valueOf(PolyEndPoint.get(i).y) + ",";
             }
-            Content = CoreStep.toString() + "#" + IndexOfLen.toString() + "#" +StartX+"#"+StartY+ "#" +EndX+"#"+EndY;
+            Content = CoreStep.toString() + "#" + IndexOfLen.toString() + "#" + StartX + "#" + StartY + "#" + EndX + "#" + EndY;
             try {
                 File file = new File(FileName);
                 if (!file.exists()) {
@@ -147,8 +158,8 @@ public class Map extends JPanel {
                 Map.CoreStep.clear();
                 Map.CoreDirection.clear();
                 Map.IndexOfLen.clear();
-                Map.DirectionBuffer = null;
-                Map.StepBuffer = null;
+                Map.DirectionBuffer = "";
+                Map.StepBuffer = "";
                 System.out.println("Clear Buffer");
 
             } catch (IOException e) {
@@ -156,18 +167,60 @@ public class Map extends JPanel {
             }
         }
     }
-    public void LoadFile(String FileName) {
+
+    public static boolean LoadFile(String FileName) {
         try (BufferedReader br = new BufferedReader(new FileReader(FileName))) {
             String sCurrentLine;
-            Map.ReadMap = null;
+            Map.ReadMap = "";
             while ((sCurrentLine = br.readLine()) != null) {
                 System.out.println("Read File : " + sCurrentLine);
                 Map.ReadMap += sCurrentLine;
             }
-            String[] LoadBuffer = Map.ReadMap.split("#");
+            String[] LoadBuffer = Map.ReadMap.replace("[", "").replace("]", "").split("#");//CoreStep,IndexOfLen,StartX,StartY,EndX,EndY
+            if (LoadBuffer.length == 6) {
+                Map.CoreStep = new ArrayList(Arrays.asList(LoadBuffer[0]));
+                Map.IndexOfLen = new ArrayList(Arrays.asList(LoadBuffer[1]));
+                String[] StartX = LoadBuffer[2].split(",");
+                String[] StartY = LoadBuffer[3].split(",");
+                String[] EndX = LoadBuffer[4].split(",");
+                String[] EndY = LoadBuffer[5].split(",");
+                int[] IntStartX = new int[StartX.length];
+                int[] IntStartY = new int[StartY.length];
+                int[] IntEndX = new int[EndX.length];
+                int[] IntEndY = new int[EndY.length];
+                //Create Point
+                for (int i = 0; i < StartX.length; i++) {
+                    IntStartX[i] = Integer.parseInt(StartX[i]);
+                    IntStartY[i] = Integer.parseInt(StartY[i]);
+                    IntEndX[i] = Integer.parseInt(EndX[i]);
+                    IntEndY[i] = Integer.parseInt(EndY[i]);
+                    PolyStartPoint.add(i, new Point(IntStartX[i], IntStartY[i]));
+                    PolyEndPoint.add(i, new Point(IntEndX[i], IntEndY[i]));
+                }
+                System.out.println("File Format Correct");
+                Map.LoadStatus = true;
+                return true;
+            } else {
+                System.out.println("File Format Fail");
+                return false;
+            }
         } catch (IOException e) {
             System.out.println("Error : " + e.toString());
-        }
+            return false;
+        }   
     }
-
+    public static void PrepareData() {
+        Map.AnalystPath();
+            String StartX = "";
+            String StartY = "";
+            String EndX = "";
+            String EndY = "";
+            for (int i = 0; i < PolyStartPoint.size(); i++) {
+                StartX += String.valueOf(PolyStartPoint.get(i).x) + ",";
+                StartY += String.valueOf(PolyStartPoint.get(i).y) + ",";
+                EndX += String.valueOf(PolyEndPoint.get(i).x) + ",";
+                EndY += String.valueOf(PolyEndPoint.get(i).y) + ",";
+            }
+            GuiControlNode.PlanStream = CoreStep.toString() + "#" + IndexOfLen.toString() + "#" + StartX + "#" + StartY + "#" + EndX + "#" + EndY;      
+    }
 }
