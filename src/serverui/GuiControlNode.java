@@ -24,9 +24,9 @@ public class GuiControlNode extends javax.swing.JFrame {
 
     public boolean CheckListenbtn = false;
     public boolean CheckDisconnectbtn = false;
-    public String DirectionStream = null;
+    public static String DirectionStream = null;
     public static String DragStatus = "";
-
+    public static String PlanStream;
     public GuiControlNode() throws IOException {
         initComponents();
     }
@@ -64,7 +64,7 @@ public class GuiControlNode extends javax.swing.JFrame {
         cbxScaleSelector = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAreaShowPath = new javax.swing.JTextArea();
-        btnAuto = new javax.swing.JButton();
+        btnAutoStart = new javax.swing.JButton();
         GraphicMap = new serverui.Map();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -206,8 +206,13 @@ public class GuiControlNode extends javax.swing.JFrame {
         txtAreaShowPath.setRows(5);
         jScrollPane2.setViewportView(txtAreaShowPath);
 
-        btnAuto.setText("START/STOP");
-        btnAuto.setEnabled(false);
+        btnAutoStart.setText("START/STOP");
+        btnAutoStart.setEnabled(false);
+        btnAutoStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAutoStartActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout ConSoleLayout = new javax.swing.GroupLayout(ConSole);
         ConSole.setLayout(ConSoleLayout);
@@ -257,7 +262,7 @@ public class GuiControlNode extends javax.swing.JFrame {
                             .addGroup(ConSoleLayout.createSequentialGroup()
                                 .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnAuto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(btnAutoStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -293,7 +298,7 @@ public class GuiControlNode extends javax.swing.JFrame {
                     .addComponent(ModeSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnClear)
-                        .addComponent(btnAuto)))
+                        .addComponent(btnAutoStart)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ConSoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDirection, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -445,22 +450,22 @@ public class GuiControlNode extends javax.swing.JFrame {
     }//GEN-LAST:event_CloseActionPerformed
 
     private void GoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoActionPerformed
-        this.DirectionStream = "W";
+        GuiControlNode.DirectionStream = "W";
         this.displayMessage("Click/Press : W");
     }//GEN-LAST:event_GoActionPerformed
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-        this.DirectionStream = "S";
+        GuiControlNode.DirectionStream = "S";
         this.displayMessage("Click/Press : S");
     }//GEN-LAST:event_BackActionPerformed
 
     private void RotateRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RotateRightActionPerformed
-        this.DirectionStream = "D";
+        GuiControlNode.DirectionStream = "D";
         this.displayMessage("Click/Press : D");
     }//GEN-LAST:event_RotateRightActionPerformed
 
     private void RotateLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RotateLeftActionPerformed
-        this.DirectionStream = "A";
+        GuiControlNode.DirectionStream = "A";
         this.displayMessage("Click/Press : A");
     }//GEN-LAST:event_RotateLeftActionPerformed
 
@@ -478,7 +483,7 @@ public class GuiControlNode extends javax.swing.JFrame {
             btnTeach.setEnabled(true);
             btnLoad.setEnabled(true);
             btnClear.setEnabled(true);
-            btnAuto.setEnabled(true);
+            btnAutoStart.setEnabled(true);
             cbxFileSelector.setEnabled(true);
             txtPathName.setEnabled(true);
             cbxScaleSelector.setEnabled(true);
@@ -492,7 +497,7 @@ public class GuiControlNode extends javax.swing.JFrame {
             btnTeach.setEnabled(false);
             btnLoad.setEnabled(false);
             btnClear.setEnabled(false);
-            btnAuto.setEnabled(false);
+            btnAutoStart.setEnabled(false);
             cbxFileSelector.setEnabled(false);
             txtPathName.setEnabled(false);
             cbxScaleSelector.setEnabled(false);
@@ -602,6 +607,15 @@ public class GuiControlNode extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnLoadActionPerformed
+
+    private void btnAutoStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoStartActionPerformed
+        if(Map.OpStatus == true){
+           Map.PrepareData();
+           Map.OpStatus = false;
+           btnAutoStart.setEnabled(false);
+        }
+        
+    }//GEN-LAST:event_btnAutoStartActionPerformed
     public void windowClosing(WindowEvent e) {
         this.CheckDisconnectbtn = true;
     }
@@ -668,10 +682,10 @@ public class GuiControlNode extends javax.swing.JFrame {
     private javax.swing.JButton ConToRobot;
     private javax.swing.JButton Go;
     public static javax.swing.JPanel GraphicMap;
-    private javax.swing.JToggleButton ModeSelect;
+    public javax.swing.JToggleButton ModeSelect;
     private javax.swing.JButton RotateLeft;
     private javax.swing.JButton RotateRight;
-    private javax.swing.JButton btnAuto;
+    private javax.swing.JButton btnAutoStart;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnLoad;
     private javax.swing.JButton btnSave;

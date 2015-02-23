@@ -126,7 +126,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="btnClear" min="-2" pref="73" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="btnAuto" max="32767" attributes="0"/>
+                                  <Component id="btnAutoStart" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -176,7 +176,7 @@
                       <Component id="ModeSelect" min="-2" pref="52" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnClear" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnAuto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnAutoStart" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -307,6 +307,7 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="Action actionListenerKey2 = new AbstractAction() {&#xa;      public void actionPerformed(ActionEvent actionEvent) {&#xa;        JToggleButton source = (JToggleButton) actionEvent.getSource();&#xa;        //System.out.println(&quot;Activated: &quot; + source.getText());&#xa;        String tx=source.getText();&#xa;        if(tx == &quot;MANUAL MODE&quot; || tx == &quot;AUTO MODE&quot;){&#xa;            ModeSelect.doClick();&#xa;        }&#xa;      }&#xa;    };&#xa;&#xa;KeyStroke E_ModeSelect = KeyStroke.getKeyStroke(&quot;E&quot;);&#xa;InputMap inputMap2 = ModeSelect.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);&#xa;inputMap2.put(E_ModeSelect, &quot;The Action&quot;);&#xa;ActionMap actionMap2 = ModeSelect.getActionMap();&#xa;actionMap2.put(&quot;The Action&quot;, actionListenerKey2);"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="lblRightWheel">
@@ -458,11 +459,14 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="btnAuto">
+        <Component class="javax.swing.JButton" name="btnAutoStart">
           <Properties>
             <Property name="text" type="java.lang.String" value="START/STOP"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAutoStartActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
