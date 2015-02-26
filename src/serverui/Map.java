@@ -38,7 +38,7 @@ public class Map extends JPanel {
     private static String DirectionBuffer;
     private static String StepBuffer;
     public static String ReadMap;
-    public static boolean OpStatus = true;
+    public static boolean OpStatus = false;
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -199,6 +199,7 @@ public class Map extends JPanel {
                 }
                 System.out.println("File Format Correct");
                 Map.LoadStatus = true;
+                Map.OpStatus = true;
                 return true;
             } else {
                 System.out.println("File Format Fail");

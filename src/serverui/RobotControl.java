@@ -121,7 +121,7 @@ public class RobotControl {
                     RobotControl.DirectionStream = null;
                     GuiControlNode.DirectionStream = null;
                 }
-            } else if ("autos mode".equalsIgnoreCase(winframe.ModeSelect.getText())) {
+            } else if ("auto mode".equalsIgnoreCase(winframe.ModeSelect.getText())) {
                 RobotControl.PlanStream = GuiControlNode.PlanStream;
                 if (RobotControl.PlanStream != null){
                     outTcp.println("auto"+RobotControl.PlanStream);
