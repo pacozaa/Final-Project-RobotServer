@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
@@ -131,8 +132,14 @@ public class RobotClient {
     public static BufferedReader intcp = null;
     public static GuiRobotNode winframe = null;
     public static SerialPortRW serialPort = null;
-    public static int LWheelClient = 0;
-    public static int RWheelClient = 0;
+    public static int LW = 0;
+    public static int RW = 0;
+    public static boolean tl = false;
+    public static boolean tr = false;
+    public static boolean st = false;
+    public static boolean rv = false;
+    public static boolean rn = false;
+    
     public static String SerialInputLine;
     public static String TCPConnectStatus;
     public static String SerialConnectStatus;
@@ -201,8 +208,15 @@ public class RobotClient {
         while (true) {
             while ((TCPInputLine = intcp.readLine()) != null) {
                 this.DebugLog("Recieve Stream TCP : " + TCPInputLine);
-                RobotClient.RobotMove = AnalystMove(TCPInputLine);
-                RobotClient.serialFire = 1;
+                if(!"auto".equals(AnalystMove(TCPInputLine))){
+                    RobotClient.RobotMove = AnalystMove(TCPInputLine);
+                    RobotClient.serialFire = 1;
+                }
+                else if("auto".equals(AnalystMove(TCPInputLine))){
+                    AutoMove(CoreStep,IndexOfLen);
+                    //RobotClient.serialFire = 1;
+                }
+                
                 Thread.sleep(1);
             }
             Thread.sleep(1);
@@ -303,7 +317,6 @@ public class RobotClient {
             String m = Data.replace("manual", "");
             return m;
         } else if (Data.contains("auto") == true) {
-            String a="";
             String[] LoadBuffer = Data.replace("[", "").replace("]", "").split("#");//CoreStep,IndexOfLen,StartX,StartY,EndX,EndY
             if (LoadBuffer.length == 6) {
                 CoreStep = new ArrayList(Arrays.asList(LoadBuffer[0]));
@@ -326,10 +339,60 @@ public class RobotClient {
                     PolyEndPoint.add(i, new Point(IntEndX[i], IntEndY[i]));
                 }
             }
-            return a;
+            return "auto";
         }
         return null;
           
     }
+
+    private void AutoMove(ArrayList<String> CoreStep, ArrayList<Integer> IndexOfLen) throws InterruptedException {
+        String[] pathLen;
+        pathLen = new String[IndexOfLen.size()];
+        for(int i = 0; IndexOfLen.size()>i;i++){
+            pathLen[i]=CoreStep.get(IndexOfLen.get(i));
+        }
+        for(int i =0; CoreStep.size()>i;i++){
+            String rC = CoreStep.get(i);
+            if("Right".equals(rC)){
+                while(tr == true){
+                    RobotClient.RobotMove = "R";
+                    RobotClient.serialFire = 1;  
+                    Thread.sleep(1);
+                }                
+            }
+            else if("Left".equals(rC)){
+                while(tl == true){
+                    RobotClient.RobotMove = "L";
+                    RobotClient.serialFire = 1;  
+                    Thread.sleep(1);
+                }  
+            }
+            else if("Str".equals(rC)){
+                while(st == true){
+                    RobotClient.RobotMove = "st";
+                    RobotClient.serialFire = 1;  
+                    Thread.sleep(1);
+                }  
+            }
+            else if("Reverse".equals(rC)){
+                while(rv == true){
+                    RobotClient.RobotMove = "rv";
+                    RobotClient.serialFire = 1;  
+                    Thread.sleep(1);
+                }  
+            }
+            else{
+                double sl = Double.parseDouble(rC);
+                double len = new BigDecimal(sl).setScale(3, BigDecimal.ROUND_HALF_DOWN).doubleValue();
+                while( rn == true && len > LW){//Both Wheel
+                    RobotClient.RobotMove = "W";
+                    RobotClient.serialFire = 1;
+                    Thread.sleep(1);
+                }
+            }
+        }
+    }
+
+ 
 }
     
