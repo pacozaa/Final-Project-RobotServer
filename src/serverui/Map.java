@@ -95,14 +95,17 @@ public class Map extends JPanel {
                 if (("AlongX".equals(bf) && "ReverseY".equals(at)) || ("AlongY".equals(bf) && "AlongX".equals(at))) {
                     StepBuffer = "Left";
                 }
-                IndexOfLen.add(i, j);
-                Double Len = getLenght(PolyStartPoint.get(i), PolyEndPoint.get(i));
-                CoreStep.add(j++, Double.toString(Len));
-                CoreStep.add(j++, StepBuffer); 
             }
+            IndexOfLen.add(i, j);
+            Double Len = getLenght(PolyStartPoint.get(i), PolyEndPoint.get(i));
+            CoreStep.add(j++, Double.toString(Len));
+            CoreStep.add(j++, StepBuffer);
+            StepBuffer = null;
         }
+        CoreStep.remove(CoreStep.size()-1);
         System.out.println(CoreStep);
         System.out.println(CoreStep.toString());
+        
     }
 
     public static Double getLenght(Point Start, Point End) {
