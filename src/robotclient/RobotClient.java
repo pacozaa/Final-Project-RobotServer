@@ -90,19 +90,7 @@ class SerialSend implements Runnable {
     }
 }
 
-class SetUpDataToHost implements Runnable {
 
-    RobotClient t = new RobotClient();
-
-    public void run() {
-        try {
-            t.DebugLog("Start: " + this.toString());
-            t.SetUpDataToHost();
-        } catch (InterruptedException ex) {
-            System.out.println(ex);
-        }
-    }
-}
 
 class StartSerialConnect implements Runnable {
 
@@ -132,8 +120,9 @@ public class RobotClient {
     public static BufferedReader intcp = null;
     public static GuiRobotNode winframe = null;
     public static SerialPortRW serialPort = null;
-    public static int LW = 0;
-    public static int RW = 0;
+    public static double LW = 0;
+    public static double RW = 0;
+    public static double RANGE = 0;
     public static boolean tl = false;
     public static boolean tr = false;
     public static boolean st = false;
@@ -161,14 +150,12 @@ public class RobotClient {
         Thread SendStreamThread = new Thread(new SendStream());
         Thread SerialReadThread = new Thread(new SerialRead());
         Thread SerialSendThread = new Thread(new SerialSend());
-        Thread SetUpDataToHostThread = new Thread(new SetUpDataToHost());
         StartSerialThread.start();
         ConnectHostThread.start();
         RecieveThread.start();
         SendStreamThread.start();
         SerialReadThread.start();
         SerialSendThread.start();
-        SetUpDataToHostThread.start();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 winframe.setVisible(true);
@@ -261,6 +248,7 @@ public class RobotClient {
             while (SerialPortRW.readSerial != null && SerialPortRW.counter > this.counterMain && CheckConvertInteger(SerialPortRW.readSerial) == true) {
                 RobotClient.SerialInputLine = SerialPortRW.readSerial;
                 this.DebugLog("SerialRead : " + RobotClient.SerialInputLine);
+                SerialSplit(RobotClient.SerialInputLine);
                 this.counterMain = SerialPortRW.counter;
                 if (SerialPortRW.counter > 10) {
                     SerialPortRW.counter = 0;
@@ -278,10 +266,10 @@ public class RobotClient {
             Thread.sleep(1);
         }
         while (true) {
-            while (RobotClient.RobotMove != null && this.serialFire == 1) {
+            while (RobotClient.RobotMove != null && RobotClient.serialFire == 1) {
                 serialPort.serialSend(RobotClient.RobotMove);
-                this.DebugLog("SerialSend : " + this.TCPInputLine + " Fire : " + this.serialFire);
-                this.serialFire = 0;
+                this.DebugLog("SerialSend : " + RobotClient.RobotMove);
+                RobotClient.serialFire = 0;
                 Thread.sleep(1);
             }
             Thread.sleep(1);
@@ -289,12 +277,6 @@ public class RobotClient {
 
     }
 
-    public void SetUpDataToHost() throws InterruptedException {
-        while (true) {
-
-            Thread.sleep(1);
-        }
-    }
 
     public String toHex(String arg) {
         return String.format("%x", new BigInteger(1, arg.getBytes(/*YOUR_CHARSET?*/)));
@@ -384,7 +366,7 @@ public class RobotClient {
             else{
                 double sl = Double.parseDouble(rC);
                 double len = new BigDecimal(sl).setScale(3, BigDecimal.ROUND_HALF_DOWN).doubleValue();
-                while( rn == true && len > LW){//Both Wheel
+                while( rn == true && len > RANGE){//Both Wheel
                     RobotClient.RobotMove = "W";
                     RobotClient.serialFire = 1;
                     Thread.sleep(1);
@@ -392,6 +374,14 @@ public class RobotClient {
             }
         }
     }
+
+    private void SerialSplit(String SerialInputLine) {
+        String[] buff = SerialInputLine.split(",");
+        
+    }
+    //Protocol ----> Len,LW,RW
+
+ 
 
  
 }
