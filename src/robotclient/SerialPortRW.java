@@ -33,6 +33,7 @@ public class SerialPortRW implements SerialPortEventListener {
         "COM6",
         "COM7",
         "COM8",
+        "COM9",
     };
     private BufferedReader inputSerial;
     private OutputStream outputStream;
