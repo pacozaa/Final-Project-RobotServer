@@ -267,7 +267,7 @@ public class RobotClient {
         }
         while (true) {
             while (RobotClient.RobotMove != null && RobotClient.serialFire == 1) {
-                serialPort.serialSend(RobotClient.RobotMove+"\n");
+                serialPort.serialSend(RobotClient.RobotMove);
                 this.DebugLog("SerialSend : " + RobotClient.RobotMove);
                 RobotClient.serialFire = 0;
                 Thread.sleep(1);
