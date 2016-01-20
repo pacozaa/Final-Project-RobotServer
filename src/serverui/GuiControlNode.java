@@ -450,22 +450,22 @@ public class GuiControlNode extends javax.swing.JFrame {
     }//GEN-LAST:event_CloseActionPerformed
 
     private void GoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoActionPerformed
-        GuiControlNode.DirectionStream = "W";
+        GuiControlNode.DirectionStream = "w";
         this.displayMessage("Click/Press : W");
     }//GEN-LAST:event_GoActionPerformed
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-        GuiControlNode.DirectionStream = "S";
+        GuiControlNode.DirectionStream = "s";
         this.displayMessage("Click/Press : S");
     }//GEN-LAST:event_BackActionPerformed
 
     private void RotateRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RotateRightActionPerformed
-        GuiControlNode.DirectionStream = "D";
+        GuiControlNode.DirectionStream = "d";
         this.displayMessage("Click/Press : D");
     }//GEN-LAST:event_RotateRightActionPerformed
 
     private void RotateLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RotateLeftActionPerformed
-        GuiControlNode.DirectionStream = "A";
+        GuiControlNode.DirectionStream = "a";
         this.displayMessage("Click/Press : A");
     }//GEN-LAST:event_RotateLeftActionPerformed
 
